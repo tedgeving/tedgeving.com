@@ -2,20 +2,47 @@ import React from 'react'
 import { Link } from 'gatsby'
 
 import Layout from '../components/layout'
-import Image from '../components/image'
-import SEO from '../components/seo'
+import Page from '../components/page'
+import Work from '../components/work'
 
-const IndexPage = () => (
+
+const IndexPage = ({data}) => (
   <Layout>
-    <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
+    <Page title={data.informationPage.title}  body={data.informationPage.content}/>
+    <Work work={data.allWordpressPost.edges} />
+    <Page title={data.previousPage.title}  body={data.previousPage.content}/>
   </Layout>
 )
 
 export default IndexPage
+
+
+export const query = graphql`
+query allPages {
+
+  informationPage: wordpressPage(wordpress_id: {eq: 2}) {
+    title
+    content
+  }
+  previousPage: wordpressPage(wordpress_id: {eq: 12}) {
+    title
+    content
+  }
+  allWordpressPost {
+    edges {
+      node {
+        id
+        slug
+        title
+        content
+        acf{
+          url
+        }
+        
+      }
+    
+    }
+  }
+
+}
+`
