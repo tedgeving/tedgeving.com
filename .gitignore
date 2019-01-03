@@ -56,7 +56,7 @@ typings/
 
 # gatsby files
 .cache/
-public
+# public  include for CI deployment to Netlify
 
 # Mac files
 .DS_Store
